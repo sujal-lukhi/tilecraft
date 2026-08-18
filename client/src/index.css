@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    background-color: #071916;
+    color: #191C1B;
+  }
+
+  h1, h2, h3, .font-serif {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+}
+
+/* Luxury Marble Background utility */
+.bg-marble-luxury {
+  background-image: linear-gradient(to bottom, rgba(7, 25, 22, 0.72), rgba(7, 25, 22, 0.85)), url('/textures/marble-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+/* Custom smooth animations */
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+@keyframes rotateStamp {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-float {
+  animation: floatSlow 6s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: rotateStamp 25s linear infinite;
+}
+
+/* Luxury card glassmorphism */
+.glass-pill {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.dark-pill {
+  background: #0F3830;
+  color: #FFFFFF;
+}
+
+/* Smooth custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #071916;
+}
+::-webkit-scrollbar-thumb {
+  background: #2b7465;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c7bca6;
+}

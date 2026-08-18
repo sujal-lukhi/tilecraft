@@ -1,0 +1,149 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String        @id @default(uuid())
+  email        String        @unique
+  password     String
+  fullName     String
+  phone        String?
+  role         String        @default("CUSTOMER") // "CUSTOMER" | "ADMIN"
+  avatar       String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  enquiries    Enquiry[]
+  savedDesigns SavedDesign[]
+
+  @@map("users")
+}
+
+model Service {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  category    String   // "Bathroom", "Flooring", "Kitchen", "Stone & Marble", "Staircase", "Custom"
+  description String
+  features    String?  // JSON string or comma-separated list
+  iconUrl     String?
+  coverImage  String?
+  isActive    Boolean  @default(true)
+  orderIndex  Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("services")
+}
+
+model Project {
+  id             String         @id @default(uuid())
+  title          String
+  slug           String         @unique
+  category       String         // "Bathroom", "Flooring", "Kitchen", "Stone & Marble", "Staircase"
+  description    String
+  clientName     String?
+  location       String?
+  completionDate String?
+  coverImage     String
+  videoUrl       String?
+  isFeatured     Boolean        @default(false)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  media          ProjectMedia[]
+  beforeAfters   BeforeAfter[]
+  savedDesigns   SavedDesign[]
+
+  @@map("projects")
+}
+
+model ProjectMedia {
+  id         String   @id @default(uuid())
+  projectId  String
+  project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  mediaUrl   String
+  mediaType  String   @default("IMAGE") // "IMAGE" | "VIDEO"
+  caption    String?
+  orderIndex Int      @default(0)
+  createdAt  DateTime @default(now())
+
+  @@map("project_media")
+}
+
+model BeforeAfter {
+  id          String   @id @default(uuid())
+  title       String
+  category    String   // "Bathroom", "Flooring", "Kitchen", "Stone & Marble", "Staircase"
+  description String?
+  beforeImage String
+  afterImage  String
+  projectId   String?
+  project     Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  createdAt   DateTime @default(now())
+
+  @@map("before_afters")
+}
+
+model Enquiry {
+  id            String    @id @default(uuid())
+  customerId    String?
+  customer      User?     @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  fullName      String
+  email         String
+  phone         String
+  serviceType   String
+  message       String
+  siteVisitDate String?
+  status        String    @default("PENDING") // "PENDING" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED"
+  adminNotes    String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("enquiries")
+}
+
+model Testimonial {
+  id             String   @id @default(uuid())
+  clientName     String
+  roleOrLocation String?
+  rating         Int      @default(5)
+  comment        String
+  avatarUrl      String?
+  isApproved     Boolean  @default(true)
+  createdAt      DateTime @default(now())
+
+  @@map("testimonials")
+}
+
+model ContactInfo {
+  id           String   @id @default(uuid())
+  address      String
+  phone        String
+  email        String
+  workingHours String
+  mapUrl       String?
+  socialLinks  String?  // JSON string
+  updatedAt    DateTime @updatedAt
+
+  @@map("contact_info")
+}
+
+model SavedDesign {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projectId String?
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  title     String
+  imageUrl  String
+  notes     String?
+  createdAt DateTime @default(now())
+
+  @@map("saved_designs")
+}
