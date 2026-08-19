@@ -3,7 +3,7 @@ import { PrismaService } from '../../database/prisma/prisma.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { CreateBeforeAfterDto } from './dto/create-before-after.dto';
-import { StorageService } from '../../integrations/storage/storage.service';
+import { StorageService, UploadedMulterFile } from '../../integrations/storage/storage.service';
 
 @Injectable()
 export class ProjectsService {
@@ -114,7 +114,7 @@ export class ProjectsService {
   }
 
   // File Upload Helper
-  uploadMedia(file: Express.Multer.File, subfolder: string) {
+  uploadMedia(file: UploadedMulterFile, subfolder: string) {
     return this.storageService.saveFile(file, subfolder);
   }
 }

@@ -2,6 +2,18 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import * as fs from 'fs';
 import * as path from 'path';
 
+export interface UploadedMulterFile {
+  fieldname?: string;
+  originalname: string;
+  encoding?: string;
+  mimetype?: string;
+  size?: number;
+  destination?: string;
+  filename?: string;
+  path?: string;
+  buffer: Buffer;
+}
+
 @Injectable()
 export class StorageService {
   private uploadDir = process.env.UPLOAD_DIR || './uploads';
@@ -12,7 +24,7 @@ export class StorageService {
     }
   }
 
-  saveFile(file: Express.Multer.File, subfolder = 'gallery'): string {
+  saveFile(file: UploadedMulterFile, subfolder = 'gallery'): string {
     if (!file) {
       throw new BadRequestException('No file provided');
     }

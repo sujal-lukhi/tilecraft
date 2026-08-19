@@ -24,6 +24,8 @@ import { Role } from '../../common/enums/role.enum';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 
+import { UploadedMulterFile } from '../../integrations/storage/storage.service';
+
 @ApiTags('Projects & Gallery')
 @Controller('projects')
 export class ProjectsController {
@@ -109,7 +111,7 @@ export class ProjectsController {
   @ApiOperation({ summary: 'Admin: Upload project photo/video' })
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
-  async uploadFile(@UploadedFile() file: Express.Multer.File) {
+  async uploadFile(@UploadedFile() file: UploadedMulterFile) {
     if (!file) {
       throw new BadRequestException('Please provide a file to upload');
     }
