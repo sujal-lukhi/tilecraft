@@ -37,6 +37,9 @@ export class MailService {
           user,
           pass,
         },
+        connectionTimeout: 8000,
+        greetingTimeout: 8000,
+        socketTimeout: 10000,
       });
       this.logger.log(`📧 Mail service configured for Gmail SMTP with sender: ${user}`);
     } catch (err: any) {

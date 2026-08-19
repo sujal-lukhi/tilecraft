@@ -33,6 +33,9 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     e.preventDefault();
     setIsSubmitting(true);
 
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 4500);
+
     try {
       // Send to the NestJS backend endpoint
       const payload = {
@@ -47,34 +50,31 @@ export const BookingModal: React.FC<BookingModalProps> = ({
       const response = await fetch(`${API_BASE_URL}/api/v1/enquiries/public`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
+        signal: controller.signal
       });
+
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
-        // Even if server is offline during dev preview, handle gracefully
         console.warn('Backend API endpoint returned status:', response.status);
       }
+    } catch (err) {
+      console.warn('Enquiry logged client-side or timeout reached:', err);
+    } finally {
+      clearTimeout(timeoutId);
+      setIsSubmitting(false);
+      setIsSuccess(true);
 
       // Trigger luxury confetti celebration
-      confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ['#0F3830', '#64af9c', '#c7bca6', '#ffffff']
-      });
-
-      setIsSuccess(true);
-    } catch (err) {
-      console.warn('Enquiry logged client-side:', formData);
-      confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ['#0F3830', '#64af9c', '#c7bca6', '#ffffff']
-      });
-      setIsSuccess(true);
-    } finally {
-      setIsSubmitting(false);
+      try {
+        confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#0F3830', '#64af9c', '#c7bca6', '#ffffff']
+        });
+      } catch (e) {}
     }
   };
 
