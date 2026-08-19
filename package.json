@@ -6,10 +6,10 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "npx prisma generate && npx prisma db push && npm --prefix client install --include=dev && npm --prefix client run build && nest build",
+    "build": "npx prisma generate && npx prisma db push && npx prisma db seed && npm --prefix client install --include=dev && npm --prefix client run build && nest build",
     "build:client": "npm --prefix client install --include=dev && npm --prefix client run build",
-    "build:all": "npx prisma generate && npx prisma db push && npm --prefix client install --include=dev && npm --prefix client run build && nest build",
-    "render-build": "npm install --include=dev && npx prisma generate && npx prisma db push && npm --prefix client install --include=dev && npm --prefix client run build && nest build",
+    "build:all": "npx prisma generate && npx prisma db push && npx prisma db seed && npm --prefix client install --include=dev && npm --prefix client run build && nest build",
+    "render-build": "npm install --include=dev && npx prisma generate && npx prisma db push && npx prisma db seed && npm --prefix client install --include=dev && npm --prefix client run build && nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",

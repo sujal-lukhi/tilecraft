@@ -3,6 +3,8 @@ import {
   ConflictException,
   UnauthorizedException,
   ForbiddenException,
+  OnModuleInit,
+  Logger,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -12,11 +14,45 @@ import { LoginDto } from './dto/login.dto';
 import { Role } from '../../common/enums/role.enum';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements OnModuleInit {
+  private readonly logger = new Logger(AuthService.name);
+
   constructor(
     private prisma: PrismaService,
     private jwtService: JwtService,
   ) {}
+
+  async onModuleInit() {
+    await this.ensureAdminExists();
+  }
+
+  async ensureAdminExists() {
+    try {
+      const adminEmails = [
+        'admin@tilecraftinteriors.com',
+        'tilecraftinteriors1@gmail.com'
+      ];
+
+      for (const email of adminEmails) {
+        const exists = await this.prisma.user.findUnique({ where: { email } });
+        if (!exists) {
+          const hashedPassword = await bcrypt.hash('AdminPass123!', 10);
+          await this.prisma.user.create({
+            data: {
+              email,
+              password: hashedPassword,
+              fullName: 'Tilecraft Administrator',
+              phone: '+91 9313684573',
+              role: Role.ADMIN,
+            },
+          });
+          this.logger.log(`🛡️ Admin user initialized: ${email}`);
+        }
+      }
+    } catch (err: any) {
+      this.logger.warn(`Admin auto-seed notice: ${err.message}`);
+    }
+  }
 
   async registerCustomer(dto: RegisterDto) {
     const existingUser = await this.prisma.user.findUnique({
