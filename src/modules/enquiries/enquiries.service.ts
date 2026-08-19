@@ -22,17 +22,17 @@ export class EnquiriesService {
       },
     });
 
-    // Send email alert to admin (tilecraftinteriors1@gmail.com) and confirmation to customer asynchronously
+    // Send email alert to admin (tilecraftinteriors1@gmail.com) and confirmation to customer
     try {
-      this.mailService.sendNewEnquiryAlertToAdmin(enquiry).catch((err) => {
-        this.logger.error(`Error sending admin enquiry alert: ${err.message}`);
-      });
+      const emailPromises: Promise<any>[] = [
+        this.mailService.sendNewEnquiryAlertToAdmin(enquiry),
+      ];
 
       if (enquiry.email) {
-        this.mailService.sendCustomerConfirmation(enquiry).catch((err) => {
-          this.logger.warn(`Error sending customer confirmation: ${err.message}`);
-        });
+        emailPromises.push(this.mailService.sendCustomerConfirmation(enquiry));
       }
+
+      await Promise.allSettled(emailPromises);
     } catch (e: any) {
       this.logger.warn(`Could not dispatch email notification: ${e.message}`);
     }

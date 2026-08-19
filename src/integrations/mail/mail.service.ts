@@ -25,21 +25,22 @@ export class MailService {
 
   private initTransporter() {
     const user = process.env.SMTP_USER || process.env.GMAIL_USER || 'tilecraftinteriors1@gmail.com';
-    const pass = process.env.SMTP_PASS || process.env.GMAIL_APP_PASSWORD || process.env.SMTP_PASSWORD;
+    const rawPass = process.env.SMTP_PASS || process.env.GMAIL_APP_PASSWORD || process.env.SMTP_PASSWORD || 'qrygyscbygfumazv';
+    const pass = rawPass.replace(/\s+/g, '');
 
-    if (user && pass) {
+    try {
       this.transporter = nodemailer.createTransport({
-        service: 'gmail',
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
         auth: {
           user,
           pass,
         },
       });
       this.logger.log(`📧 Mail service configured for Gmail SMTP with sender: ${user}`);
-    } else {
-      this.logger.warn(
-        `⚠️ SMTP_PASS / GMAIL_APP_PASSWORD not set. Email notifications will be logged to console. To enable live Gmail delivery, set SMTP_USER and SMTP_PASS (Gmail 16-character App Password).`,
-      );
+    } catch (err: any) {
+      this.logger.error(`❌ Mail transporter initialization failed: ${err.message}`);
     }
   }
 
