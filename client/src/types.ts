@@ -40,3 +40,17 @@ export interface BeforeAfterItem {
   afterImage: string;
   description: string;
 }
+
+export interface ReelItem {
+  id: string;
+  title: string;
+  category: string;
+  videoUrl: string;
+  thumbnailUrl: string;
+  duration?: string;
+  likes: number;
+  views: string;
+  description: string;
+  tags: string[];
+  instagramUrl?: string;
+}

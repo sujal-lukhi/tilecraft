@@ -1,6 +1,39 @@
-import { ProjectItem, StatItem, TestimonialItem, ServiceItem, BeforeAfterItem } from '../types';
+import { ProjectItem, StatItem, TestimonialItem, ServiceItem, BeforeAfterItem, ReelItem } from '../types';
 
 export const HERO_IMAGE = "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1600&q=85"; // Scandinavian living room with blue sofa, wooden chair, soft daylight
+
+export const FEATURED_FIVE_CATEGORIES = [
+  {
+    id: 'custom-tile',
+    title: 'Custom Tile Installation',
+    subtitle: 'Masonry & Fireplaces',
+    imageUrl: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=85'
+  },
+  {
+    id: 'bathroom-tile',
+    title: 'Bathroom Tile Renovation',
+    subtitle: 'Walk-in & Wet Rooms',
+    imageUrl: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=600&q=85'
+  },
+  {
+    id: 'kitchen-tile',
+    title: 'Kitchen Tile Design',
+    subtitle: 'Backsplash & Slabs',
+    imageUrl: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=600&q=85'
+  },
+  {
+    id: 'outdoor-tile',
+    title: 'Outdoor Tile Solutions',
+    subtitle: 'Patios & Staircases',
+    imageUrl: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=600&q=85'
+  },
+  {
+    id: 'floor-tile',
+    title: 'Floor Tile Installation',
+    subtitle: 'Large Format Porcelain',
+    imageUrl: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=85'
+  }
+];
 
 export const GALLERY_PROJECTS: ProjectItem[] = [
   {
@@ -154,3 +187,59 @@ export const RECENT_WORKS = [
     tag: 'Completed 2024'
   }
 ];
+
+export const REELS_DATA: ReelItem[] = [
+  {
+    id: 'reel-1',
+    title: 'Crafted with Precision. Finished with Perfection.',
+    category: 'Tile & Stone Interiors',
+    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-modern-kitchen-with-wooden-countertops-and-white-cabinets-41551-large.mp4',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=600&q=85',
+    duration: '0:30',
+    likes: 2840,
+    views: '54.2K',
+    description: 'From beautiful tiles to stone work, flooring and complete interior finishing — every detail matters. Design • Quality • Perfection in Ahmedabad, Gujarat.',
+    tags: ['#TileCraft', '#TileCraftInteriors', '#Ahmedabad', '#MarbleWork', '#BathroomRenovation', '#KitchenTiles'],
+    instagramUrl: 'https://www.instagram.com/p/DcNktoTt5hY/'
+  },
+  {
+    id: 'reel-2',
+    title: 'Italian Bookmatched Marble Installation',
+    category: 'Stone Crafting',
+    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-modern-living-room-with-a-couch-and-decorations-41554-large.mp4',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=85',
+    duration: '0:35',
+    likes: 3190,
+    views: '68.1K',
+    description: 'Master artisans aligning continuous Calacatta Gold veining across a 16-foot high architectural living room feature wall.',
+    tags: ['#TileCraftInteriors', '#CalacattaMarble', '#Bookmatching', '#AhmedabadInteriors'],
+    instagramUrl: 'https://www.instagram.com/tilecraftinteriors/'
+  },
+  {
+    id: 'reel-3',
+    title: 'Bespoke Spa Master Bathroom Suite',
+    category: 'Bathroom Luxe',
+    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-bright-kitchen-with-island-41553-large.mp4',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=600&q=85',
+    duration: '0:24',
+    likes: 4120,
+    views: '83.4K',
+    description: 'Walkthrough of our latest spa retreat: floor-to-ceiling travertine tiles, LED underlit floating vanity, and frameless rain shower.',
+    tags: ['#TileCraft', '#MasterBathroom', '#SpaBathroom', '#TileFitting'],
+    instagramUrl: 'https://www.instagram.com/tilecraftinteriors/'
+  },
+  {
+    id: 'reel-4',
+    title: 'Floating Stone Staircase & Platform Work',
+    category: 'Staircase Work',
+    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-modern-room-with-decorations-and-furniture-41552-large.mp4',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=600&q=85',
+    duration: '0:30',
+    likes: 2950,
+    views: '49.8K',
+    description: 'Cantilevered marble stair risers with integrated ambient warm illumination. Architectural perfection in every step.',
+    tags: ['#StaircaseDesign', '#StoneWork', '#InteriorFinishing', '#TileCraftInteriors'],
+    instagramUrl: 'https://www.instagram.com/tilecraftinteriors/'
+  }
+];
+

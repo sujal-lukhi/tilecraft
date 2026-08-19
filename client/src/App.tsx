@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { FiveImageStrip } from './components/FiveImageStrip';
 import { AboutGallery } from './components/AboutGallery';
 import { StatsSection } from './components/StatsSection';
 import { TestimonialSplit } from './components/TestimonialSplit';
 import { BeforeAfterSlider } from './components/BeforeAfterSlider';
+import { ReelsShowcase } from './components/ReelsShowcase';
 import { ServicesSection } from './components/ServicesSection';
 import { DreamHomeCTA } from './components/DreamHomeCTA';
 import { Footer } from './components/Footer';
@@ -38,6 +40,9 @@ export const App: React.FC = () => {
         {/* Hero Section */}
         <Hero onOpenBooking={() => handleOpenBooking('Stone & Marble')} />
 
+        {/* 5-Image Horizontal Line-to-Line Strip Showcase */}
+        <FiveImageStrip onSelectCategory={(cat) => handleOpenBooking(cat)} />
+
         {/* About & 4-Card Curated Masonry Gallery */}
         <AboutGallery />
 
@@ -49,6 +54,9 @@ export const App: React.FC = () => {
 
         {/* Before & After Interactive Renovation Slider */}
         <BeforeAfterSlider />
+
+        {/* Instagram Reels & Video Walkthrough Showcase */}
+        <ReelsShowcase onOpenBooking={(category) => handleOpenBooking(category)} />
 
         {/* Specialized Services */}
         <ServicesSection onSelectService={(service) => handleOpenBooking(service)} />
