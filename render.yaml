@@ -20,3 +20,9 @@ services:
         value: 7d
       - key: CORS_ORIGIN
         value: "*"
+      - key: ADMIN_NOTIFICATION_EMAIL
+        value: tilecraftinteriors1@gmail.com
+      - key: SMTP_USER
+        value: tilecraftinteriors1@gmail.com
+      - key: SMTP_PASS
+        sync: false

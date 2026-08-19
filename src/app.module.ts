@@ -8,6 +8,7 @@ import redisConfig from './config/redis.config';
 
 import { PrismaModule } from './database/prisma/prisma.module';
 import { StorageModule } from './integrations/storage/storage.module';
+import { MailModule } from './integrations/mail/mail.module';
 
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
@@ -29,6 +30,7 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
     }),
     PrismaModule,
     StorageModule,
+    MailModule,
     AuthModule,
     UsersModule,
     ServicesModule,

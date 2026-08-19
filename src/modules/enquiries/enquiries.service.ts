@@ -1,20 +1,43 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma/prisma.service';
 import { CreateEnquiryDto } from './dto/create-enquiry.dto';
 import { UpdateEnquiryStatusDto } from './dto/update-enquiry-status.dto';
+import { MailService } from '../../integrations/mail/mail.service';
 
 @Injectable()
 export class EnquiriesService {
-  constructor(private prisma: PrismaService) {}
+  private readonly logger = new Logger(EnquiriesService.name);
+
+  constructor(
+    private prisma: PrismaService,
+    private mailService: MailService,
+  ) {}
 
   async createEnquiry(dto: CreateEnquiryDto, customerId?: string) {
-    return this.prisma.enquiry.create({
+    const enquiry = await this.prisma.enquiry.create({
       data: {
         ...dto,
         customerId: customerId || null,
         status: 'PENDING',
       },
     });
+
+    // Send email alert to admin (tilecraftinteriors1@gmail.com) and confirmation to customer asynchronously
+    try {
+      this.mailService.sendNewEnquiryAlertToAdmin(enquiry).catch((err) => {
+        this.logger.error(`Error sending admin enquiry alert: ${err.message}`);
+      });
+
+      if (enquiry.email) {
+        this.mailService.sendCustomerConfirmation(enquiry).catch((err) => {
+          this.logger.warn(`Error sending customer confirmation: ${err.message}`);
+        });
+      }
+    } catch (e: any) {
+      this.logger.warn(`Could not dispatch email notification: ${e.message}`);
+    }
+
+    return enquiry;
   }
 
   async findCustomerEnquiries(customerId: string) {
