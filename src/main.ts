@@ -7,6 +7,12 @@ import { TransformInterceptor } from './common/interceptors/transform.intercepto
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import * as express from 'express';
 import * as path from 'path';
+import * as dns from 'dns';
+
+// Force IPv4 first to prevent ENETUNREACH IPv6 errors on Render / cloud containers
+if (dns.setDefaultResultOrder) {
+  dns.setDefaultResultOrder('ipv4first');
+}
 
 async function bootstrap() {
   const logger = new Logger('Bootstrap');

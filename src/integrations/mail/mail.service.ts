@@ -31,17 +31,18 @@ export class MailService {
     try {
       this.transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
+        port: 587,
+        secure: false, // Use STARTTLS on port 587
+        family: 4, // Force IPv4 (fixes Render ENETUNREACH on IPv6)
         auth: {
           user,
           pass,
         },
-        connectionTimeout: 8000,
-        greetingTimeout: 8000,
-        socketTimeout: 10000,
-      });
-      this.logger.log(`📧 Mail service configured for Gmail SMTP with sender: ${user}`);
+        connectionTimeout: 15000,
+        greetingTimeout: 15000,
+        socketTimeout: 20000,
+      } as any);
+      this.logger.log(`📧 Mail service configured for Gmail SMTP (IPv4 / Port 587) with sender: ${user}`);
     } catch (err: any) {
       this.logger.error(`❌ Mail transporter initialization failed: ${err.message}`);
     }
