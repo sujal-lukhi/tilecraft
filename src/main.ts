@@ -19,6 +19,10 @@ async function bootstrap() {
   const uploadDir = process.env.UPLOAD_DIR || './uploads';
   app.use('/uploads', express.static(path.resolve(uploadDir)));
 
+  // Serve Built React Frontend SPA (for production deployment on Render)
+  const clientDist = path.resolve(process.cwd(), 'client', 'dist');
+  app.use(express.static(clientDist));
+
   // CORS
   app.enableCors({
     origin: '*',
@@ -66,6 +70,18 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
+
+  // SPA fallback for React router / page refreshes
+  const httpAdapter = app.getHttpAdapter();
+  httpAdapter.get('*', (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
+      return next();
+    }
+    const indexPath = path.resolve(process.cwd(), 'client', 'dist', 'index.html');
+    return res.sendFile(indexPath, (err) => {
+      if (err) next();
+    });
+  });
 
   const port = process.env.PORT || 3000;
   await app.listen(port);

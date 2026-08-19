@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { X, CheckCircle2, Calendar, Phone, Mail, User, Sparkles, ArrowRight } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
+import { API_BASE_URL } from '../config/api';
+
 interface BookingModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -42,7 +44,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         message: formData.message.trim() || `Appointment requested for ${formData.serviceType}`
       };
 
-      const response = await fetch('http://localhost:3000/api/v1/enquiries/public', {
+      const response = await fetch(`${API_BASE_URL}/api/v1/enquiries/public`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

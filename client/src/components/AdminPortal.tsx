@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  X, LogOut, AlertCircle, Phone, Mail, 
-  Calendar, Search, RefreshCw, Shield, Trash2, MessageSquare, ChevronDown
+  X, LogOut, AlertCircle, Search, Shield, Phone, Mail, 
+  Calendar, Trash2, RefreshCw, MessageSquare, ChevronDown
 } from 'lucide-react';
+import { API_BASE_URL } from '../config/api';
 
 interface EnquiryRecord {
   id: string;
@@ -87,7 +88,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ isOpen, onClose }) => 
 
     setIsLoading(true);
     try {
-      const res = await fetch('http://localhost:3000/api/v1/enquiries/admin/all', {
+      const res = await fetch(`${API_BASE_URL}/api/v1/enquiries/admin/all`, {
         headers: {
           'Authorization': `Bearer ${currentToken}`
         }
@@ -126,7 +127,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ isOpen, onClose }) => 
     setLoginError('');
 
     try {
-      const res = await fetch('http://localhost:3000/api/v1/auth/login', {
+      const res = await fetch(`${API_BASE_URL}/api/v1/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -174,7 +175,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ isOpen, onClose }) => 
 
     if (token && token !== 'demo-admin-jwt-token') {
       try {
-        await fetch(`http://localhost:3000/api/v1/enquiries/admin/${id}/status`, {
+        await fetch(`${API_BASE_URL}/api/v1/enquiries/admin/${id}/status`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
@@ -194,7 +195,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ isOpen, onClose }) => 
 
     if (token && token !== 'demo-admin-jwt-token') {
       try {
-        await fetch(`http://localhost:3000/api/v1/enquiries/admin/${id}/status`, {
+        await fetch(`${API_BASE_URL}/api/v1/enquiries/admin/${id}/status`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
@@ -214,7 +215,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ isOpen, onClose }) => 
 
     if (token && token !== 'demo-admin-jwt-token') {
       try {
-        await fetch(`http://localhost:3000/api/v1/enquiries/admin/${id}`, {
+        await fetch(`${API_BASE_URL}/api/v1/enquiries/admin/${id}`, {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${token}`
