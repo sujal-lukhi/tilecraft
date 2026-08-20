@@ -31,6 +31,12 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const cleanPhone = formData.phone.replace(/\D/g, '');
+    if (cleanPhone.length !== 10) {
+      return;
+    }
+
     setIsSubmitting(true);
 
     const controller = new AbortController();
@@ -41,7 +47,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
       const payload = {
         fullName: formData.fullName,
         email: formData.email,
-        phone: formData.phone,
+        phone: `+91 ${cleanPhone}`,
         serviceType: formData.serviceType,
         siteVisitDate: formData.siteVisitDate || undefined,
         message: formData.message.trim() || `Appointment requested for ${formData.serviceType}`
@@ -172,18 +178,34 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1.5">
-                    Phone Number
-                  </label>
-                  <div className="relative">
-                    <Phone className="w-4 h-4 text-stone-400 absolute left-3.5 top-3.5" />
+                  <div className="flex justify-between items-center mb-1.5">
+                    <label className="block text-xs font-semibold uppercase tracking-wider text-stone-700">
+                      Phone Number
+                    </label>
+                    <span className="text-[11px] font-medium text-stone-400">
+                      {formData.phone.length}/10 digits
+                    </span>
+                  </div>
+                  <div className="relative flex items-center">
+                    <div className="absolute left-3 flex items-center gap-1.5 pointer-events-none text-stone-500 text-xs font-semibold border-r border-stone-300 pr-2">
+                      <Phone className="w-3.5 h-3.5 text-stone-400" />
+                      <span>+91</span>
+                    </div>
                     <input
                       type="tel"
                       required
-                      placeholder="+1 (555) 000-0000"
+                      inputMode="numeric"
+                      pattern="[0-9]{10}"
+                      maxLength={10}
+                      minLength={10}
+                      title="Please enter a valid 10-digit mobile number"
+                      placeholder="93136 84573"
                       value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full pl-10 pr-4 py-3 rounded-2xl bg-stone-50 border border-stone-200 text-sm focus:bg-white focus:border-brand-900 focus:outline-none transition-colors"
+                      onChange={(e) => {
+                        const digitsOnly = e.target.value.replace(/\D/g, '').slice(0, 10);
+                        setFormData({ ...formData, phone: digitsOnly });
+                      }}
+                      className="w-full pl-20 pr-4 py-3 rounded-2xl bg-stone-50 border border-stone-200 text-sm focus:bg-white focus:border-brand-900 focus:outline-none transition-colors font-mono tracking-wider"
                     />
                   </div>
                 </div>
