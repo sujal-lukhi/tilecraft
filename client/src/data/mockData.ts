@@ -1,7 +1,7 @@
 import { ProjectItem, StatItem, TestimonialItem, ServiceItem, BeforeAfterItem, ReelItem } from '../types';
 
 // Hero Main Visual - Ultra-Luxury Indian Villa Living Hall with Mirror-Polished Italian Marble & Warm Cove Illumination
-export const HERO_IMAGE = "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=85";
+export const HERO_IMAGE = "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1600&q=85";
 
 export const FEATURED_FIVE_CATEGORIES = [
   {
