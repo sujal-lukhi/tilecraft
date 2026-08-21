@@ -102,7 +102,7 @@ export const TESTIMONIALS: TestimonialItem[] = [
     role: 'Bungalow Owner',
     location: 'Ambli Road, Ahmedabad',
     rating: 5,
-    image: 'https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?auto=format&fit=crop&w=1200&q=85'
+    image: 'https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?auto=format&fit=crop&w=1200&q=85'
   },
   {
     id: '2',

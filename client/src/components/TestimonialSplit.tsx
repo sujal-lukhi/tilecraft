@@ -74,11 +74,16 @@ export const TestimonialSplit: React.FC = () => {
         </div>
 
         {/* Right High-Res Visual */}
-        <div className="lg:col-span-7 relative h-72 sm:h-96 lg:h-auto overflow-hidden">
+        <div className="lg:col-span-7 relative h-72 sm:h-96 lg:h-auto overflow-hidden bg-brand-950">
           <img
+            key={current.id}
             src={current.image}
-            alt="Interior Architecture Showcase"
+            alt={`${current.author} Luxury Interior Showcase`}
             className="w-full h-full object-cover object-center transition-all duration-700 ease-out"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src =
+                'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85';
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-brand-900 via-transparent to-transparent opacity-60" />
         </div>
